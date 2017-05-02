@@ -11,15 +11,12 @@ namespace Úlovky
     { 
         public string NazevDruhu { get; set; }
         public int MinDelka { get; set; }
-
-
        
         public List<PridatRybu> druhyRyby;
         public List<int> delkyList;
         public List<string> hmotnostList;
         public List<string> casList;
 
-        //haha
 
         public PridatRybu(string nazevDruhu, int minDelka)
         {
