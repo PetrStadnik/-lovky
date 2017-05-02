@@ -1,0 +1,66 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Úlovky"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Úlovky.MainWindow"
+    xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        Title="Úlovkovník"   Height="600" Width="1100" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowInTaskbar="False">
+    <Window.Resources>
+        <local:PridatRybu x:Key="PridatRybu" />
+    </Window.Resources>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*" />
+            <RowDefinition Height="449*"/>
+            <RowDefinition Height="90*" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Background="#FF7ABAE6">
+            <Menu x:Name="menu" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Background="#FF7ABAE6">
+                <MenuItem Header="Vymazat" Cursor="Hand" FontSize="20" FontFamily="Segoe UI Light" >
+                    <MenuItem Header="Smazat výběr" Click="VymazatMenuItem_Click"/>
+                    <MenuItem Header="Smazat vše" Click="VymazatVseMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Cursor="Hand" Header="Seřadit" FontSize="20" FontFamily="Segoe UI Light" >
+                    <RadioButton x:Name="delkaRadioButton" Cursor="Hand" Content="Délka" GroupName="seraditPodle" Click="SeradRadioButton_Click"/>
+                    <RadioButton x:Name="datumRadioButton" Cursor="Hand" Content="Datum" IsChecked="True" GroupName="seraditPodle" Click="SeradRadioButton_Click"/>
+                    <RadioButton x:Name="hmotnostRadioButton" Cursor="Hand" Content="Hmotnost" GroupName="seraditPodle" Click="SeradRadioButton_Click"/>
+                    <RadioButton x:Name="druhRadioButton" Cursor="Hand" Content="Druh" GroupName="seraditPodle" Click="SeradRadioButton_Click"/>
+                    <Separator/>
+                    <RadioButton x:Name="vzestupneRadioButton" IsChecked="True" Cursor="Hand" Content="Vzestupně" GroupName="seraditJak" Click="SeradRadioButton_Click"/>
+                    <RadioButton x:Name="sestupneRadioButton" Cursor="Hand" Content="Sestupně" GroupName="seraditJak" Click="SeradRadioButton_Click"/>
+                </MenuItem>
+                <MenuItem Cursor="Hand" Header="Grafy" FontSize="20" FontFamily="Segoe UI Light" Click="MenuItem_Click" />
+            </Menu>
+
+
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding Ulovky}"   x:Name="ulovkyListView"  Width="1050" Height="425" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0"  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="170" Header="Druh"/>
+                    <GridViewColumn  Width="70" DisplayMemberBinding="{Binding Delka}"  Header="Delka"/>
+                    <GridViewColumn  Width="120" DisplayMemberBinding="{Binding Hmotnost}" Header="Hmotnost"/>
+                    <GridViewColumn  Width="150" DisplayMemberBinding="{Binding DatumChyceni}"  Header="Datum ulovení"/>
+                    <GridViewColumn  Width="150" DisplayMemberBinding="{Binding CasChyceni}"  Header="Čas ulovení"/>
+                    <GridViewColumn  Width="350" DisplayMemberBinding="{Binding Poznamka}"  Header="Poznámka"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+
+        <StackPanel Background="Gainsboro" Grid.Row="2" Orientation="Horizontal" DataContext="{StaticResource PridatRybu}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBox Margin="0,0,0,0" Padding="10, 5" x:Name="druhComboBox" ItemsSource="{Binding NazevToInput}" DisplayMemberPath="NazevDruhu" HorizontalAlignment="Left"   VerticalAlignment="center" Width="120" SelectedIndex="0" />
+            <ComboBox  Margin="5,0,0,0" Padding="10, 5" x:Name="delkaComboBox" DataContext="{Binding SelectedItem, ElementName=druhComboBox}" ItemsSource="{Binding DelkaToInput}" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="100" SelectedIndex="0" />
+            <ComboBox  Margin="5,0,0,0" Padding="10, 5" x:Name="hmotnostComboBox" ItemsSource="{Binding HmotnostToInput}" Height="27" SelectedIndex="0" HorizontalAlignment="Center"  VerticalAlignment="Center"   Width="111" />
+            <DatePicker  Margin="5,0,0,0" Padding="5, 3"  x:Name="datumDatePicker" HorizontalAlignment="Center"  VerticalAlignment="Center" FirstDayOfWeek="Monday"  SelectedDate="{Binding DatumToInput, Mode=OneTime}"/>
+            <ComboBox  Margin="5,0,0,0" Padding="10, 5"  x:Name="casUloveniComboBox" ItemsSource="{Binding CasUloveniToInput}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectedIndex="12" />
+            <TextBox  Margin="5,0,0,0" x:Name="poznamkaTextBox"    Height="27" Width="350" FontSize="15" MaxLength="40"  />
+            <Button x:Name="odeslaButton" Margin="5,0,0,0" Content="Přidat Rybu" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10, 4" Click="odeslaButton_Click" />
+        </StackPanel>
+        <CheckBox x:Name="checkBox" Content="Ponechána" HorizontalAlignment="Left" Margin="970,63,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="checkBox_Checked" Width="83"/>
+    </Grid>
+</Window>

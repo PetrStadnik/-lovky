@@ -1,0 +1,17 @@
+﻿<Window x:Class="Úlovky.GrafWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:local="clr-namespace:Úlovky"
+        Title="Graf" Height="700" Width="1500">
+    <Window.DataContext>
+        <local:Graf/>
+    </Window.DataContext>
+    <Grid>
+        <oxy:PlotView Model="{Binding grafTime}"/>
+        <!--<oxy:Plot Width="250">
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding Points}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>-->
+    </Grid>
+</Window>
